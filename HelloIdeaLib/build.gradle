@@ -7,6 +7,7 @@ buildscript {
     }
 }
 apply plugin: 'android-library'
+apply plugin: 'maven-publish'
 
 repositories {
     mavenCentral()
@@ -19,7 +20,13 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 19
+        versionCode 1
+        versionName '0.0.1'
     }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:+'
 }
 
 /*
@@ -56,3 +63,19 @@ task unit(type:Test, dependsOn: assemble) {
 
 // bind to check
 check.dependsOn unit
+
+/*
+ * Publishing to local mvn repo
+ */
+version '0.0.1'
+group 'com.karolmajta'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact file("${project.buildDir}/libs/${project.name}-${version}.aar")
+        }
+    }
+}
+
+publishToMavenLocal.dependsOn build

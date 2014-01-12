@@ -1,9 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.6.+'
+        // classpath 'com.karolmajta:HelloIdeaLib:+'
     }
 }
 apply plugin: 'android'
@@ -19,12 +21,6 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 19
-    }
-
-    sourceSets {
-        main {
-            instrumentTest.setRoot("$project.projectDir/tests/java")
-        }
     }
 }
 
