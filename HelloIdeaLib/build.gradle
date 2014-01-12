@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.+'
+    }
+}
+apply plugin: 'android-library'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.1"
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 19
+    }
+}
+
+/*
+ * JUnit test support
+ */
+
+// extend the runtime
+configurations {
+    unitCompile.extendsFrom runtime
+    unitRuntime.extendsFrom unitCompile
+}
+
+// add to dependancies
+dependencies {
+    unitCompile files("$project.buildDir/classes/release")
+    unitCompile 'junit:junit:4.11'
+}
+
+// add a new unit sourceSet
+sourceSets {
+    unit {
+        java.srcDir file('src/unit/java/**')
+        resources.srcDir file('src/unit/resources/**')
+    }
+}
+
+
+// add the unit task
+task unit(type:Test, dependsOn: assemble) {
+    description = "run unit tests"
+    testClassesDir = project.sourceSets.unit.output.classesDir
+    classpath = project.sourceSets.unit.runtimeClasspath
+}
+
+// bind to check
+check.dependsOn unit
