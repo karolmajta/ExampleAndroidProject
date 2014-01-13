@@ -46,8 +46,8 @@ dependencies {
 // add a new unit sourceSet
 sourceSets {
     unit {
-        java.srcDir file('src/unit/java/**')
-        resources.srcDir file('src/unit/resources/**')
+        java.srcDir file('src/unit/java')
+        resources.srcDir file('src/unit/resources')
     }
 }
 
