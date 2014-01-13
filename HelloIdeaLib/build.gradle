@@ -7,7 +7,6 @@ buildscript {
     }
 }
 apply plugin: 'android-library'
-apply plugin: 'maven-publish'
 
 repositories {
     mavenCentral()
@@ -63,19 +62,3 @@ task unit(type:Test, dependsOn: assemble) {
 
 // bind to check
 check.dependsOn unit
-
-/*
- * Publishing to local mvn repo
- */
-version '0.0.1'
-group 'com.karolmajta'
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifact file("${project.buildDir}/libs/${project.name}-${version}.aar")
-        }
-    }
-}
-
-publishToMavenLocal.dependsOn build
